@@ -20,6 +20,15 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         fatalError("init(coder:) has not been implemented")
     }
     
+    let nameLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Best new apps"
+        label.font = UIFont.systemFont(ofSize: 16)
+        label.isHighlighted = true 
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
     let appsCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -41,17 +50,35 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     func setupViews() {
         addSubview(appsCollectionView)
         addSubview(dividerLineView)
+        addSubview(nameLabel)
         
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self
         
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
+        appsCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50).isActive = true
+        appsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        appsCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+        appsCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
+        dividerLineView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        dividerLineView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
+        dividerLineView.widthAnchor.constraint(equalTo: appsCollectionView.widthAnchor).isActive = true
+        dividerLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
         
-        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[v0][v1(0.5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView]))
+        nameLabel.topAnchor.constraint(equalTo: appsCollectionView.topAnchor,constant: -30).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: appsCollectionView.leftAnchor, constant: 10).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: appsCollectionView.rightAnchor).isActive = true
+        nameLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        
+   //     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+        
+  //      addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
+        
+    //    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
+        
+    //    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView, "nameLabel": nameLabel]))
         
         backgroundColor = .clear
     }
@@ -66,7 +93,7 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: frame.height)
+        return CGSize(width: 100, height: frame.height - 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
