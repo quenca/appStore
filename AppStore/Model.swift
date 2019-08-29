@@ -10,7 +10,7 @@ import UIKit
 
 class AppCategory: NSObject {
     var name: String?
-    var app: [App]?
+    var apps: [App]?
     
     static func sampleAppCategories() -> [AppCategory] {
         
@@ -18,17 +18,17 @@ class AppCategory: NSObject {
         let bestNewAppsCategory = AppCategory()
         bestNewAppsCategory.name = "Best New Apps"
         
+        // Frozen App
         var apps = [App]()
         
-        // Frozen App
         let frozenApp = App()
         frozenApp.name = "Disney Build It: Frozen"
         frozenApp.imageName = "frozen"
         frozenApp.category = "Entertainment"
         frozenApp.price = NSNumber(floatLiteral: 3.99)
-        apps.append(frozenApp)
-        bestNewAppsCategory.app = apps
         
+        apps.append(frozenApp)
+        bestNewAppsCategory.apps = apps
         
         // Category
         let bestNewGamesCategory = AppCategory()
@@ -36,13 +36,15 @@ class AppCategory: NSObject {
         
         // Telepaint App
         var bestNewGameApps = [App]()
+        
         let telepaintApp = App()
         telepaintApp.name = "Telepaint"
         telepaintApp.category = "Games"
+        telepaintApp.imageName = "telepaint"
         telepaintApp.price = NSNumber(floatLiteral: 2.99)
         
         bestNewGameApps.append(telepaintApp)
-        bestNewAppsCategory.app = bestNewGameApps
+        bestNewGamesCategory.apps = bestNewGameApps
 
         return [bestNewAppsCategory, bestNewGamesCategory]
     }
