@@ -129,7 +129,7 @@ class AppCell: UICollectionViewCell {
             if let price = app?.price {
                 priceLabel.text = "$\(price)"
             } else {
-                priceLabel.text = ""
+                priceLabel.text = "Free"
             }
            
             if let imageName = app?.imageName {

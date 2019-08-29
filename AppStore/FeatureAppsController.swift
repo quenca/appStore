@@ -12,12 +12,26 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
     
     private let cellId = "cellId"
     
-    var appCategories: [AppCategory]? 
+    var appCategories: [AppCategory]?
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        appCategories = AppCategory.sampleAppCategories()
+       // appCategories = AppCategory.sampleAppCategories()
+        FeaturedApps.fetchJson { apps, error in
+            guard let apps = apps, error == nil else {
+                print(error ?? "Unknown error")
+                return
+            }
+            
+            self.appCategories = apps.appCategories
+            
+            DispatchQueue.main.async {
+                self.collectionView.reloadData()
+            }
+            
+            print(apps)
+        }
         
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.backgroundColor = .white
