@@ -15,6 +15,7 @@ struct FeaturedApps: Decodable {
         case bannerCategory
         case appCategories = "categories"
     }
+    
     static func fetchJson(completionHandler: @escaping (FeaturedApps?, Error?) -> Void) {
         let url = "https://api.letsbuildthatapp.com/appstore/featured"
         URLSession.shared.dataTask(with: URL(string:url)!) { data, _, error in
@@ -31,6 +32,7 @@ struct FeaturedApps: Decodable {
             }.resume()
     }
 }
+
 struct AppCategory: Decodable{
     let name: String?
     let apps: [App]?

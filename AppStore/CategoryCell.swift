@@ -65,28 +65,36 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         
         appsCollectionView.register(AppCell.self, forCellWithReuseIdentifier: cellId)
         
-        appsCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 50).isActive = true
+        nameLabel.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10).isActive = true
+        nameLabel.leftAnchor.constraint(equalTo: contentView.leftAnchor, constant: 10).isActive = true
+        nameLabel.rightAnchor.constraint(equalTo: contentView.rightAnchor).isActive = true
+       // nameLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
+        nameLabel.heightAnchor.constraint(equalTo: contentView.heightAnchor, multiplier: 0.1).isActive = true
+        
+        
+        appsCollectionView.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 10).isActive = true
         appsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        appsCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
-        appsCollectionView.heightAnchor.constraint(equalToConstant: 200).isActive = true
-        
-        dividerLineView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        dividerLineView.leftAnchor.constraint(equalTo: contentView.leftAnchor).isActive = true
-        dividerLineView.widthAnchor.constraint(equalTo: appsCollectionView.widthAnchor).isActive = true
+  //      appsCollectionView.widthAnchor.constraint(equalTo: contentView.widthAnchor).isActive = true
+  //      appsCollectionView.heightAnchor.constraint(equalTo: contentView.heightAnchor).isActive = true
+        appsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        appsCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+
+        dividerLineView.topAnchor.constraint(equalTo: appsCollectionView.bottomAnchor, constant: 10).isActive = true
+        dividerLineView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10).isActive = true
+        dividerLineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true 
+     //   dividerLineView.widthAnchor.constraint(equalTo: appsCollectionView.widthAnchor).isActive = true
         dividerLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
+
         
-        nameLabel.topAnchor.constraint(equalTo: appsCollectionView.topAnchor,constant: -30).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: appsCollectionView.leftAnchor, constant: 10).isActive = true
-        nameLabel.rightAnchor.constraint(equalTo: appsCollectionView.rightAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 15).isActive = true
         
-   //     addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
         
-  //      addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
-        
-    //    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
-        
-    //    addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView, "nameLabel": nameLabel]))
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
+//
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
+//
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
+//
+//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView, "nameLabel": nameLabel]))
         
         backgroundColor = .clear
     }
@@ -105,8 +113,9 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 100, height: frame.height - 30)
+        return CGSize(width: 100, height: frame.height - 32)
     }
+    
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
@@ -150,7 +159,6 @@ class AppCell: UICollectionViewCell {
     
     let imageView: UIImageView = {
         let image = UIImageView()
-      //  image.image = UIImage(named: "frozen")
         image.contentMode = .scaleAspectFill
         image.layer.cornerRadius = 16
         image.layer.masksToBounds = true
@@ -180,15 +188,56 @@ class AppCell: UICollectionViewCell {
         return label
     }()
     
+    let stackAppView: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 0
+        stackView.alignment = .center
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
+    let stackLabels: UIStackView = {
+        let stackView = UIStackView()
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+        stackView.alignment = .leading 
+        stackView.axis = .vertical
+        return stackView
+    }()
+    
     func setupViews() {
-        addSubview(imageView)
-        addSubview(nameLabel)
-        addSubview(categoryLabel)
-        addSubview(priceLabel)
+        addSubview(stackAppView)
         
-        imageView.frame = CGRect(x: 0, y: 0, width: frame.width, height: frame.width)
-        nameLabel.frame = CGRect(x: 0, y: frame.width + 2, width: frame.width, height: 40)
-        categoryLabel.frame = CGRect(x: 0, y: frame.width + 38, width: frame.width, height: 20)
-        priceLabel.frame = CGRect(x: 0, y: frame.width + 56, width: frame.width, height: 20)
+        stackAppView.addArrangedSubview(imageView)
+        stackAppView.addArrangedSubview(stackLabels)
+        
+        stackLabels.addArrangedSubview(nameLabel)
+        stackLabels.addArrangedSubview(categoryLabel)
+        stackLabels.addArrangedSubview(priceLabel)
+        
+        stackAppView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
+        stackAppView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5).isActive = true
+        stackAppView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
+        stackAppView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5).isActive = true
+        
+        stackLabels.widthAnchor.constraint(equalTo: stackAppView.widthAnchor).isActive = true
+        //stackLabels.heightAnchor.constraint(equalTo: stackAppView.heightAnchor, multiplier: 0.5).isActive = true
+        
+        //stackLabels.setContentCompressionPriority(.required, for: .vertical)
+        //stackLabels.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
+        //stackLabels.setContentHuggingPriority(., for: <#T##NSLayoutConstraint.Axis#>)
+        
+        imageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
+        imageView.heightAnchor.constraint(equalTo: widthAnchor).isActive = true
+        
+//        categoryLabel.widthAnchor.constraint(equalTo: stackAppView.widthAnchor).isActive = true
+//        categoryLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
+//
+//        priceLabel.widthAnchor.constraint(equalTo: stackAppView.widthAnchor).isActive = true
+//        priceLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
+        
     }
 }
