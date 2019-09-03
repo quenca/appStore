@@ -50,13 +50,17 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
     func showAppDetailForApp(app: App) {
         let layout = UICollectionViewFlowLayout()
         let appDetailController = AppDetailController(collectionViewLayout: layout)
+        appDetailController.coordinator = self.coordinator
+        appDetailController.img = UIImage(named: app.imageName!)!
+        appDetailController.app = app
+        //appDetailController.appHeader?.app? = app
         navigationController?.pushViewController(appDetailController, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let detailController = AppDetailController()
         detailController.coordinator = self.coordinator
-        navigationController?.pushViewController(detailController, animated: true)
+     //   navigationController?.pushViewController(detailController, animated: true)
     }
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -148,8 +152,6 @@ class LargeCategoryCell: CategoryCell {
             
             imageView.widthAnchor.constraint(equalTo: stackLargeImageView.widthAnchor)
             imageView.heightAnchor.constraint(equalTo: stackLargeImageView.heightAnchor)
-//            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": imageView]))
-//            addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|-2-[v0]-14-|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": imageView]))
         }
     }
 }
@@ -157,9 +159,8 @@ class LargeCategoryCell: CategoryCell {
 class Header: CategoryCell {
     private let bannerCellId = "bannerCellId"
 
-    
     override func setupViews() {
-//super.setupViews()
+        //super.setupViews()
         appsCollectionView.dataSource = self
         appsCollectionView.delegate = self
         appsCollectionView.register(BannerCell.self, forCellWithReuseIdentifier: bannerCellId)

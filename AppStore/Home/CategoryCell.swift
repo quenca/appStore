@@ -86,17 +86,6 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         dividerLineView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true 
      //   dividerLineView.widthAnchor.constraint(equalTo: appsCollectionView.widthAnchor).isActive = true
         dividerLineView.heightAnchor.constraint(equalToConstant: 0.5).isActive = true
-
-        
-        
-        
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": nameLabel]))
-//
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|-14-[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": dividerLineView]))
-//
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "H:|[v0]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView]))
-//
-//        addConstraints(NSLayoutConstraint.constraints(withVisualFormat: "V:|[nameLabel(30)][v0][v1(0.5)]|", options: NSLayoutConstraint.FormatOptions(), metrics: nil, views: ["v0": appsCollectionView, "v1": dividerLineView, "nameLabel": nameLabel]))
         
         backgroundColor = .clear
     }

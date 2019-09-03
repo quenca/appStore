@@ -109,18 +109,15 @@
 		570BEB3D2316C417008E216F /* AppStore */ = {
 			isa = PBXGroup;
 			children = (
+				570BEB7A231EF1F7008E216F /* Home */,
+				570BEB7B231EF205008E216F /* Detail */,
+				570BEB7C231EF229008E216F /* Coordinator */,
+				570BEB7D231EF24F008E216F /* Model */,
 				570BEB3E2316C417008E216F /* AppDelegate.swift */,
-				570BEB402316C417008E216F /* FeatureAppsController.swift */,
-				570BEB6C2316C8C3008E216F /* CategoryCell.swift */,
-				570BEB70231DB26C008E216F /* AppDetailController.swift */,
 				570BEB422316C417008E216F /* Main.storyboard */,
 				570BEB452316C418008E216F /* Assets.xcassets */,
 				570BEB472316C418008E216F /* LaunchScreen.storyboard */,
 				570BEB4A2316C418008E216F /* Info.plist */,
-				570BEB6E23180633008E216F /* Model.swift */,
-				570BEB72231DB87B008E216F /* Coordinator .swift */,
-				570BEB74231DBA8A008E216F /* DetailCoordinator.swift */,
-				570BEB76231DBD49008E216F /* MainCoordinator.swift */,
 			);
 			path = AppStore;
 			sourceTree = "<group>";
@@ -141,6 +138,41 @@
 				570BEB602316C418008E216F /* Info.plist */,
 			);
 			path = AppStoreUITests;
+			sourceTree = "<group>";
+		};
+		570BEB7A231EF1F7008E216F /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				570BEB402316C417008E216F /* FeatureAppsController.swift */,
+				570BEB6C2316C8C3008E216F /* CategoryCell.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		570BEB7B231EF205008E216F /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				570BEB70231DB26C008E216F /* AppDetailController.swift */,
+				570BEB74231DBA8A008E216F /* DetailCoordinator.swift */,
+			);
+			name = Detail;
+			sourceTree = "<group>";
+		};
+		570BEB7C231EF229008E216F /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				570BEB76231DBD49008E216F /* MainCoordinator.swift */,
+				570BEB72231DB87B008E216F /* Coordinator .swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
+		570BEB7D231EF24F008E216F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				570BEB6E23180633008E216F /* Model.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

@@ -10,7 +10,16 @@ import UIKit
 
 class AppDetailController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
-    weak var coordinator: DetailCoordinator?
+     weak var coordinator: DetailCoordinator?
+    var img = UIImage()
+    var app: App!
+    
+     var appHeader: AppDetailHeader?
+    
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+       // coordinator?.
+    }
     
     let headerId = "headerId"
     
@@ -23,7 +32,7 @@ class AppDetailController: UICollectionViewController, UICollectionViewDelegateF
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppDetailHeader
-        
+        header.imageView.image = img
         return header
     }
     
@@ -34,18 +43,36 @@ class AppDetailController: UICollectionViewController, UICollectionViewDelegateF
 
 class AppDetailHeader: BaseCell {
     
+    weak var coordinator: DetailCoordinator?
+    
+    var app: App? {
+        didSet {
+            if let imageName = app?.imageName {
+                imageView.image = UIImage(named: imageName)
+            }
+        }
+    }
+    
+    
     let imageView: UIImageView = {
        let image = UIImageView()
         image.contentMode = .scaleToFill
+        image.translatesAutoresizingMaskIntoConstraints = false
         return image
     }()
     
     override func setupViews() {
-        backgroundColor = .blue
+        
+        addSubview(imageView)
+        
+        imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor).isActive = true
+        imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
+        imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        backgroundColor = .yellow
         super.setupViews()
     }
 }
-
 
 class BaseCell: UICollectionViewCell {
     override init(frame: CGRect) {

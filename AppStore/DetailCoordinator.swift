@@ -11,6 +11,7 @@ import UIKit
 class DetailCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
+    weak var parentCoordinator: MainCoordinator?
     
     init(navigationController: UINavigationController) {
         self.navigationController = navigationController
@@ -21,4 +22,8 @@ class DetailCoordinator: Coordinator {
         controller.coordinator = self
         navigationController.pushViewController(controller, animated: true)
     }
+    
+//    func didFinishDetail() {
+//        parentCoordinator?.childDidFinish(self)
+//    }
 }
