@@ -12,18 +12,21 @@ import UIKit
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var coordinator: MainCoordinator?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        
         let layout = UICollectionViewFlowLayout()
         let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
-        window?.rootViewController = UINavigationController(rootViewController: featureAppsController)
-    
+        
+      //  window?.rootViewController = UINavigationController(rootViewController: featureAppsController)
+        let navigation = UINavigationController(rootViewController: featureAppsController)
+        coordinator = MainCoordinator(navigationController: navigation)
+        coordinator?.start()
+        window?.rootViewController = navigation
         return true
     }
 

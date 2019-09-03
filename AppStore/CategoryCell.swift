@@ -9,11 +9,15 @@ import UIKit
 
 class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
+    var featureAppsController: FeatureAppsController?
+    
     var appCategory: AppCategory? {
         didSet {
             if let name = appCategory?.name {
                 nameLabel.text = name
             }
+            
+            appsCollectionView.reloadData()
         }
     }
     
@@ -30,7 +34,6 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     let nameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Best new apps"
         label.font = UIFont.systemFont(ofSize: 16)
         label.isHighlighted = true
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -53,7 +56,6 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
-    
     
     func setupViews() {
         addSubview(appsCollectionView)
@@ -119,6 +121,12 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 0, left: 14, bottom: 0, right: 14)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let app = appCategory?.apps?[indexPath.item] {
+        featureAppsController?.showAppDetailForApp(app: app)
+        }
     }
     
 }
@@ -229,6 +237,7 @@ class AppCell: UICollectionViewCell {
         //stackLabels.setContentCompressionPriority(.required, for: .vertical)
         //stackLabels.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         //stackLabels.setContentHuggingPriority(., for: <#T##NSLayoutConstraint.Axis#>)
+        //stackLabels.setContentHuggingPriority(.fittingSizeLevel, for: .vertical)
         
         imageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: widthAnchor).isActive = true
