@@ -24,7 +24,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
       //  window?.rootViewController = UINavigationController(rootViewController: featureAppsController)
         let navigation = UINavigationController(rootViewController: featureAppsController)
-        coordinator = MainCoordinator(navigationController: navigation)
+     //   coordinator = MainCoordinator(navigationController: navigation)
         coordinator?.start()
         window?.rootViewController = navigation
         return true

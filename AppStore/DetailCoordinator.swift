@@ -12,18 +12,19 @@ class DetailCoordinator: Coordinator {
     var childCoordinators = [Coordinator]()
     var navigationController: UINavigationController
     weak var parentCoordinator: MainCoordinator?
+    private var app: App
     
-    init(navigationController: UINavigationController) {
+    init(navigationController: UINavigationController,
+         app: App) {
         self.navigationController = navigationController
+        self.app = app
     }
     
     func start() {
-        let controller = AppDetailController()
+        let layout = UICollectionViewFlowLayout()
+        let controller = AppDetailController(collectionViewLayout: layout)
+        controller.app = app
         controller.coordinator = self
         navigationController.pushViewController(controller, animated: true)
     }
-    
-//    func didFinishDetail() {
-//        parentCoordinator?.childDidFinish(self)
-//    }
 }

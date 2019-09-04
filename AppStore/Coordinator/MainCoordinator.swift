@@ -17,10 +17,10 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     }
     
     func start() {
-//        navigationController.delegate = self
-//        let layout = UICollectionViewFlowLayout()
-//        let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
-//        navigationController.pushViewController(featureAppsController, animated: true)
+
+        let layout = UICollectionViewFlowLayout()
+        let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
+        navigationController.pushViewController(featureAppsController, animated: true)
     }
     
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
@@ -46,8 +46,8 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
         }
     }
     
-    func appDetail() {
-        let child = DetailCoordinator(navigationController: navigationController)
+    func appDetail(app: App) {
+        let child = DetailCoordinator(navigationController: navigationController, app: app)
         childCoordinators.append(child)
         child.parentCoordinator = self
         child.start()

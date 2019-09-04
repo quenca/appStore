@@ -9,7 +9,7 @@
 import UIKit
 
 class FeatureAppsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    weak var coordinator: DetailCoordinator?
+    weak var parentCoordinator: MainCoordinator?
     
     private let cellId = "cellId"
     private let largeCellId = "largeCellId"
@@ -48,18 +48,14 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
     }
     
     func showAppDetailForApp(app: App) {
-        let layout = UICollectionViewFlowLayout()
-        let appDetailController = AppDetailController(collectionViewLayout: layout)
-        appDetailController.coordinator = self.coordinator
-       // appDetailController.img = UIImage(named: app.imageName!)!
-        appDetailController.app = app
-        //appDetailController.appHeader?.app? = app
-        navigationController?.pushViewController(appDetailController, animated: true)
+        let mainCoordinator = MainCoordinator(navigationController: self.navigationController!)
+         mainCoordinator.appDetail(app: app)
+        
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailController = AppDetailController()
-        detailController.coordinator = self.coordinator
+      //  let detailController = AppDetailController()
+    //    detailController.coordinator = self.parentCoordinator
      //   navigationController?.pushViewController(detailController, animated: true)
     }
     

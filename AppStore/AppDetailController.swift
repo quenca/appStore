@@ -61,7 +61,7 @@ class AppDetailHeader: BaseCell {
     var app: App? {
         didSet {
             if let imageName = app?.imageName {
-             //   imageView.image = UIImage(named: imageName)
+                imageView.image = UIImage(named: imageName)
             }
         }
     }
@@ -104,7 +104,7 @@ class AppDetailHeader: BaseCell {
     let dividerLineView: UIView = {
         let view = UIView()
         view.backgroundColor = UIColor(white: 0.4, alpha: 0.4)
-        view.translatesAutoresizingMaskIntoConstraints = false 
+        view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
     
