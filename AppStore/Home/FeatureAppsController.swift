@@ -51,7 +51,7 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
         let layout = UICollectionViewFlowLayout()
         let appDetailController = AppDetailController(collectionViewLayout: layout)
         appDetailController.coordinator = self.coordinator
-        appDetailController.img = UIImage(named: app.imageName!)!
+       // appDetailController.img = UIImage(named: app.imageName!)!
         appDetailController.app = app
         //appDetailController.appHeader?.app? = app
         navigationController?.pushViewController(appDetailController, animated: true)

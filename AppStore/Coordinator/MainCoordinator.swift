@@ -17,10 +17,10 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     }
     
     func start() {
-        navigationController.delegate = self
-        let layout = UICollectionViewFlowLayout()
-        let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
-        navigationController.pushViewController(featureAppsController, animated: true)
+//        navigationController.delegate = self
+//        let layout = UICollectionViewFlowLayout()
+//        let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
+//        navigationController.pushViewController(featureAppsController, animated: true)
     }
     
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
