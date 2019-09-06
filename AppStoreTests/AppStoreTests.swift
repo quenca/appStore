@@ -10,6 +10,11 @@ import XCTest
 @testable import AppStore
 
 class AppStoreTests: XCTestCase {
+    
+    let appStoreAPI = DataModel()
+    
+    
+    
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

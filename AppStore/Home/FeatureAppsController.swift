@@ -8,8 +8,7 @@
 
 import UIKit
 
-class FeatureAppsController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-    weak var parentCoordinator: MainCoordinator?
+class FeatureAppsController: UIViewController {
     
     private let cellId = "cellId"
     private let largeCellId = "largeCellId"
@@ -17,49 +16,84 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
     
     var appCategories: [AppCategory]?
     var bannerCategory: AppCategory?
+    var featuresApp: AppsApiProtocol
+    
+    init(featuresApp: AppsApiProtocol = DataModel()) {
+        self.featuresApp = featuresApp
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    let collectionView: UICollectionView = {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        
+        let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.backgroundColor = .clear
+        collectionView.translatesAutoresizingMaskIntoConstraints = false
+        return collectionView
+    }()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        collectionView.delegate = self
+        collectionView.dataSource = self
         
-        navigationItem.title = "Featured Apps"
+        setupViews()
         
-       // appCategories = AppCategory.sampleAppCategories()
-        FeaturedApps.fetchJson { apps, error in
+        featuresApp.fetchJson { apps, error in
             guard let apps = apps, error == nil else {
                 print(error ?? "Unknown error")
                 return
             }
-            
             self.appCategories = apps.appCategories
             self.bannerCategory = apps.bannerCategory
             
             DispatchQueue.main.async {
                 self.collectionView.reloadData()
             }
-            
             print(apps)
         }
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+    }
+    
+    func setupViews() {
+        
+        view.addSubview(collectionView)
+        collectionView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        collectionView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
+        collectionView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+       
+        navigationItem.title = "Featured Apps"
+        collectionView.backgroundColor = .white
         
         collectionView.register(CategoryCell.self, forCellWithReuseIdentifier: cellId)
         collectionView.register(LargeCategoryCell.self, forCellWithReuseIdentifier: largeCellId)
         collectionView.register(Header.self, forSupplementaryViewOfKind: UICollectionView.elementKindSectionHeader, withReuseIdentifier: headerId)
-        
-        collectionView.backgroundColor = .white
     }
     
     func showAppDetailForApp(app: App) {
         let mainCoordinator = MainCoordinator(navigationController: self.navigationController!)
-         mainCoordinator.appDetail(app: app)
-        
+        mainCoordinator.appDetail(app: app)
     }
+}
+
+extension FeatureAppsController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
-    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
       //  let detailController = AppDetailController()
-    //    detailController.coordinator = self.parentCoordinator
+      //   detailController.coordinator = self.parentCoordinator
      //   navigationController?.pushViewController(detailController, animated: true)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
         if indexPath.item == 2 {
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: largeCellId, for: indexPath) as! LargeCategoryCell
@@ -76,7 +110,7 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
         return cell
     }
     
-    override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let count = appCategories?.count {
             return count
         }
@@ -95,7 +129,7 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
         return CGSize(width: view.frame.width, height: 150)
     }
     
-    override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! Header
         
         header.appCategory = bannerCategory
@@ -103,112 +137,3 @@ class FeatureAppsController: UICollectionViewController, UICollectionViewDelegat
         return header
     }
 }
-
-class LargeCategoryCell: CategoryCell {
-    
-    private let largeAppCellId = "largeAppCellId"
-    
-    override func setupViews() {
-        super.setupViews()
-        appsCollectionView.register(LargeAppCell.self, forCellWithReuseIdentifier: largeAppCellId)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: largeAppCellId, for: indexPath) as! AppCell
-        cell.app = appCategory?.apps?[indexPath.item]
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: frame.height - 32)
-    }
-    
-    private class LargeAppCell: AppCell {
-        
-        let stackLargeImageView: UIStackView = {
-            let stackView = UIStackView()
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.distribution = .fillProportionally
-            stackView.spacing = 0
-            stackView.alignment = .center
-            stackView.axis = .vertical
-            return stackView
-        }()
-        
-         override func setupViews() {
-             addSubview(stackLargeImageView)
-            
-            stackLargeImageView.addArrangedSubview(imageView)
-            imageView.translatesAutoresizingMaskIntoConstraints = false
-           
-            stackLargeImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
-            stackLargeImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5).isActive = true
-            stackLargeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5).isActive = true
-            stackLargeImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5).isActive = true
-            
-            imageView.widthAnchor.constraint(equalTo: stackLargeImageView.widthAnchor)
-            imageView.heightAnchor.constraint(equalTo: stackLargeImageView.heightAnchor)
-        }
-    }
-}
-
-class Header: CategoryCell {
-    private let bannerCellId = "bannerCellId"
-
-    override func setupViews() {
-        //super.setupViews()
-        appsCollectionView.dataSource = self
-        appsCollectionView.delegate = self
-        appsCollectionView.register(BannerCell.self, forCellWithReuseIdentifier: bannerCellId)
-        
-        addSubview(appsCollectionView)
-        appsCollectionView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 0).isActive = true
-        appsCollectionView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 0).isActive = true
-        appsCollectionView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
-        appsCollectionView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: bannerCellId, for: indexPath) as! AppCell
-        cell.app = appCategory?.apps?[indexPath.item]
-        return cell
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
-    }
-    
-    override func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 200, height: frame.height - 32)
-    }
-}
-
-private class BannerCell: AppCell {
-    
-    let stackLargeImageView: UIStackView = {
-        let stackView = UIStackView()
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.distribution = .fillProportionally
-        stackView.spacing = 0
-        stackView.alignment = .center
-        stackView.axis = .vertical
-        return stackView
-    }()
-    
-    override func setupViews() {
-        addSubview(stackLargeImageView)
-        
-        stackLargeImageView.addArrangedSubview(imageView)
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = 0
-        
-        stackLargeImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 5).isActive = true
-        stackLargeImageView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: 5).isActive = true
-        stackLargeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 0).isActive = true
-        stackLargeImageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 0).isActive = true
-        
-        imageView.widthAnchor.constraint(equalTo: stackLargeImageView.widthAnchor)
-        imageView.heightAnchor.constraint(equalTo: stackLargeImageView.heightAnchor)
-    }
-}
-

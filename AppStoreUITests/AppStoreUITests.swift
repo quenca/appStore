@@ -7,8 +7,22 @@
 //
 
 import XCTest
+@testable import AppStore
 
 class AppStoreUITests: XCTestCase {
+    
+    func testJSON() {
+      let app = App(imageName: "dine", id: 0, name: "Dine - More Dates, Not Swipes", category: "Social Networking", price: 3.99)
+    }
+    
+    func testHelloWorld() {
+        var helloWorld: String?
+        
+        XCTAssertNil(helloWorld)
+        
+        helloWorld = "hello world"
+        XCTAssertEqual(helloWorld, "hello world")
+    }
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.

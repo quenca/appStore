@@ -16,7 +16,6 @@ class CategoryCell: UICollectionViewCell, UICollectionViewDataSource, UICollecti
             if let name = appCategory?.name {
                 nameLabel.text = name
             }
-            
             appsCollectionView.reloadData()
         }
     }
@@ -221,8 +220,6 @@ class AppCell: UICollectionViewCell {
         stackAppView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: 5).isActive = true
         
         stackLabels.widthAnchor.constraint(equalTo: stackAppView.widthAnchor).isActive = true
-        //stackLabels.heightAnchor.constraint(equalTo: stackAppView.heightAnchor, multiplier: 0.5).isActive = true
-        
         //stackLabels.setContentCompressionPriority(.required, for: .vertical)
         //stackLabels.setContentCompressionResistancePriority(.defaultLow, for: .vertical)
         //stackLabels.setContentHuggingPriority(., for: <#T##NSLayoutConstraint.Axis#>)
@@ -230,12 +227,5 @@ class AppCell: UICollectionViewCell {
         
         imageView.widthAnchor.constraint(equalTo: widthAnchor).isActive = true
         imageView.heightAnchor.constraint(equalTo: widthAnchor).isActive = true
-        
-//        categoryLabel.widthAnchor.constraint(equalTo: stackAppView.widthAnchor).isActive = true
-//        categoryLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
-//
-//        priceLabel.widthAnchor.constraint(equalTo: stackAppView.widthAnchor).isActive = true
-//        priceLabel.heightAnchor.constraint(equalToConstant: 10).isActive = true
-        
     }
 }

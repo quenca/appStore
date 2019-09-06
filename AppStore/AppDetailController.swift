@@ -15,7 +15,6 @@ class AppDetailController: UICollectionViewController, UICollectionViewDelegateF
     var app: App? {
         didSet {
             navigationItem.title = app?.name
-            
         }
     }
     
@@ -23,7 +22,6 @@ class AppDetailController: UICollectionViewController, UICollectionViewDelegateF
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(animated)
-       // coordinator?.
     }
     
     let headerId = "headerId"
@@ -37,8 +35,7 @@ class AppDetailController: UICollectionViewController, UICollectionViewDelegateF
     
     override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! AppDetailHeader
-     
-        header.nameLabel.text = app?.name
+        
         header.imageView.image = UIImage(named: app!.imageName!)
         
         if let price = app?.price?.description {
@@ -60,12 +57,11 @@ class AppDetailHeader: BaseCell {
     
     var app: App? {
         didSet {
-            if let imageName = app?.imageName {
+            if let imageName =  app?.imageName {
                 imageView.image = UIImage(named: imageName)
             }
         }
     }
-    
     
     let imageView: UIImageView = {
        let image = UIImageView()

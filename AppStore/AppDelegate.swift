@@ -19,14 +19,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
-        let layout = UICollectionViewFlowLayout()
-        let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
-        
-      //  window?.rootViewController = UINavigationController(rootViewController: featureAppsController)
-        let navigation = UINavigationController(rootViewController: featureAppsController)
-     //   coordinator = MainCoordinator(navigationController: navigation)
+        let featureAppsNavigation = UINavigationController()
+        coordinator = MainCoordinator(navigationController: featureAppsNavigation)
         coordinator?.start()
-        window?.rootViewController = navigation
+        window?.rootViewController = featureAppsNavigation
+        
         return true
     }
 

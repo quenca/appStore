@@ -17,12 +17,18 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
     }
     
     func start() {
-
-        let layout = UICollectionViewFlowLayout()
-        let featureAppsController = FeatureAppsController(collectionViewLayout: layout)
+        let model = DataModel()
+        let featureAppsController = FeatureAppsController(featuresApp: model)
         navigationController.pushViewController(featureAppsController, animated: true)
     }
     
+    func appDetail(app: App) {
+        let child = DetailCoordinator(navigationController: navigationController, app: app)
+        childCoordinators.append(child)
+        child.parentCoordinator = self
+        child.start()
+    }
+
     func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
         guard let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from) else {
             return
@@ -44,12 +50,5 @@ class MainCoordinator: NSObject, Coordinator, UINavigationControllerDelegate {
                 break
             }
         }
-    }
-    
-    func appDetail(app: App) {
-        let child = DetailCoordinator(navigationController: navigationController, app: app)
-        childCoordinators.append(child)
-        child.parentCoordinator = self
-        child.start()
     }
 }
